@@ -1,3 +1,4 @@
 option('editor_binary', type: 'string')
 option('program_name', type: 'string', value: 'code')
 option('data_dir_name', type: 'string', value: 'vscode')
+option('flatpak_id', type: 'string')

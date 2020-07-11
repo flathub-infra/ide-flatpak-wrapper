@@ -4,6 +4,8 @@
 set -e
 shopt -s nullglob
 
+FIRST_RUN="${XDG_CONFIG_HOME}/flatpak-vscode-first-run"
+
 function msg() {
   echo "@PROGRAM_NAME@-wrapper: $*" >&2
 }
@@ -88,4 +90,10 @@ export PYTHONUSERBASE="$XDG_DATA_HOME/python"
 export PATH="$PATH:$PYTHONUSERBASE/bin"
 
 export FLATPAK_VSCODE_ENV=1
-exec_vscode "$@"
+
+if [ ! -f "${FIRST_RUN}" ]; then
+  touch "${FIRST_RUN}"
+  exec_vscode "@FIRST_RUN_README@"
+else
+  exec_vscode "$@"
+fi
