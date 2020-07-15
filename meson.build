@@ -4,7 +4,13 @@ bash = find_program('bash')
 pymod = import('python')
 python = pymod.find_installation('python3')
 
-editor = find_program(get_option('editor_binary'))
+editor = find_program(get_option('editor_binary'), required: false)
+if editor.found()
+editor_path = editor.path()
+else
+editor_path = get_option('editor_binary')
+endif
+message('Using @0@ as editor binary'.format(editor_path))
 
 if get_option('flatpak_id') == ''
 flatpak_id = run_command('sh', '-c', 'echo $FLATPAK_ID').stdout().strip()
@@ -15,7 +21,7 @@ datadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_
 
 wrapper_data = configuration_data({
     'BASH': bash.path(),
-    'EDITOR_BINARY': editor.path(),
+    'EDITOR_BINARY': editor_path,
     'FIRST_RUN_README': join_paths(datadir, 'first_run.txt'),
     'PROGRAM_NAME': get_option('program_name'),
     'DATA_DIR_NAME': get_option('data_dir_name'),
