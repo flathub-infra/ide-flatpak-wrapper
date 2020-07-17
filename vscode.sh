@@ -93,7 +93,7 @@ export FLATPAK_VSCODE_ENV=1
 
 if [ ! -f "${FIRST_RUN}" ]; then
   touch "${FIRST_RUN}"
-  exec_vscode "@FIRST_RUN_README@"
+  exec_vscode "$@" "@FIRST_RUN_README@"
 else
   exec_vscode "$@"
 fi
