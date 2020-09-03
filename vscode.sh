@@ -94,6 +94,7 @@ export FLATPAK_VSCODE_ENV=1
 
 if [ ! -f "${FIRST_RUN}" ]; then
   touch "${FIRST_RUN}"
+  touch "${SDK_UPDATE}"
   exec_vscode "$@" "@FIRST_RUN_README@"
 elif [ ! -f "${SDK_UPDATE}" ]; then
   touch "${SDK_UPDATE}"
