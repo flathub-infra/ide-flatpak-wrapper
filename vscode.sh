@@ -5,6 +5,7 @@ set -e
 shopt -s nullglob
 
 FIRST_RUN="${XDG_CONFIG_HOME}/flatpak-vscode-first-run"
+SDK_UPDATE="${XDG_CONFIG_HOME}/flatpak-vscode-sdk-update-@SDK_VERSION@"
 
 function msg() {
   echo "@PROGRAM_NAME@-wrapper: $*" >&2
@@ -94,6 +95,9 @@ export FLATPAK_VSCODE_ENV=1
 if [ ! -f "${FIRST_RUN}" ]; then
   touch "${FIRST_RUN}"
   exec_vscode "$@" "@FIRST_RUN_README@"
+elif [ ! -f "${SDK_UPDATE}" ]; then
+  touch "${SDK_UPDATE}"
+  exec_vscode "$@" "@SDK_UPDATE_README@"
 else
   exec_vscode "$@"
 fi
