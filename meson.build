@@ -28,6 +28,7 @@ endif
 wrapper_data = configuration_data({
     'BASH': bash.path(),
     'EDITOR_BINARY': editor_path,
+    'EDITOR_TITLE': get_option('editor_title'),
     'FIRST_RUN_README': join_paths(datadir, 'first_run.txt'),
     'SDK_UPDATE_README': join_paths(datadir, 'sdk_update.txt'),
     'SDK_VERSION': sdk_version,
@@ -38,6 +39,7 @@ wrapper_data = configuration_data({
 
 readme_data = configuration_data({
     'FLATPAK_ID': flatpak_id,
+    'EDITOR_TITLE': get_option('editor_title'),
     'SDK_VERSION': sdk_version
 })
 

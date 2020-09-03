@@ -2,7 +2,7 @@
 https://www.flathub.org
 
 ------------------------------------------------------------------------------------
-| Warning: You are running an unofficial Flatpak version of Visual Studio Code !!! |
+| Warning: You are running an unofficial Flatpak version of @EDITOR_TITLE@ !!! |
 ------------------------------------------------------------------------------------
 
 Please open issues under: https://github.com/flathub/@FLATPAK_ID@/issues

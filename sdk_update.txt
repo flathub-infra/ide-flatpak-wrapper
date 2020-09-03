@@ -4,7 +4,7 @@ https://www.flathub.org
 | Warning: SDK was updated to @SDK_VERSION@ ! |
 ---------------------------------------
 
-The platform which Visual Studio Code flatpak runs on was updated to a new major version.
+The platform which @EDITOR_TITLE@ flatpak runs on was updated to a new major version.
 
 You may need to
 - Install anew your SDK extensions of matching version (e.g. `org.freedesktop.Sdk.Extension.node10//@SDK_VERSION@`)
