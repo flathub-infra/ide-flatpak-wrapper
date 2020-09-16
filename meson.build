@@ -25,15 +25,20 @@ else
 sdk_version = get_option('sdk_version')
 endif
 
+editor_args = []
+foreach arg : get_option('editor_args')
+    editor_args += '"@0@"'.format(arg)
+endforeach
+
 wrapper_data = configuration_data({
     'BASH': bash.path(),
     'EDITOR_BINARY': editor_path,
+    'EDITOR_ARGS': ' '.join(editor_args),
     'EDITOR_TITLE': get_option('editor_title'),
     'FIRST_RUN_README': join_paths(datadir, 'first_run.txt'),
     'SDK_UPDATE_README': join_paths(datadir, 'sdk_update.txt'),
     'SDK_VERSION': sdk_version,
     'PROGRAM_NAME': get_option('program_name'),
-    'DATA_DIR_NAME': get_option('data_dir_name'),
     'PYTHON_VERSION': python.language_version()
 })
 

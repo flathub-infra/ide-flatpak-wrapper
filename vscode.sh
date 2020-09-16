@@ -12,9 +12,7 @@ function msg() {
 }
 
 function exec_vscode() {
-  exec "@EDITOR_BINARY@" \
-       --extensions-dir="${XDG_DATA_HOME}/@DATA_DIR_NAME@/extensions" \
-       "$@"
+  exec "@EDITOR_BINARY@" @EDITOR_ARGS@ "$@"
 }
 
 if [ -n "${FLATPAK_VSCODE_ENV}" ]; then
