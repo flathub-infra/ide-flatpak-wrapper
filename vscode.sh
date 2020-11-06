@@ -55,13 +55,15 @@ else
 fi
 
 for i in "${SDK[@]}"; do
-  if [[ -d "/usr/lib/sdk/$i" ]]; then
-    if [[ -f "/usr/lib/sdk/$i/enable.sh" ]]; then
-      msg "Evaluating /usr/lib/sdk/$i/enable.sh"
+  sdk_ext_dir="/usr/lib/sdk/$i"
+  if [[ -d "$sdk_ext_dir" ]]; then
+    if [[ -z "$FLATPAK_SDK_EXT_NO_SCRIPTS" && \
+          -f "$sdk_ext_dir/enable.sh" ]]; then
+      msg "Evaluating $sdk_ext_dir/enable.sh"
       # shellcheck source=/dev/null
-      . "/usr/lib/sdk/$i/enable.sh"
+      . "$sdk_ext_dir/enable.sh"
     else
-      export_path_vars "/usr/lib/sdk/$i"
+      export_path_vars "$sdk_ext_dir"
     fi
   else
     msg "Requested SDK extension \"$i\" is not installed"
