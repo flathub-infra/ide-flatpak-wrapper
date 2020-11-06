@@ -20,7 +20,9 @@ endif
 datadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
 
 if get_option('sdk_version') == ''
-sdk_version = run_command('sh', '-c', '. /etc/os-release && echo ${VERSION_ID%.*}').stdout().strip()
+sdk_version_cmd = run_command('sh', '-c', '. /etc/os-release && echo $VERSION_ID')
+sdk_version_arr = sdk_version_cmd.stdout().strip().split('.')
+sdk_version = '.'.join([sdk_version_arr[0], sdk_version_arr[1]])
 else
 sdk_version = get_option('sdk_version')
 endif
