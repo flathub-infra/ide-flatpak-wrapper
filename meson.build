@@ -35,6 +35,9 @@ foreach arg : get_option('editor_args')
     editor_args += '"@0@"'.format(arg)
 endforeach
 
+first_run_template = files(get_option('first_run_template'))
+sdk_update_template = files(get_option('sdk_update_template'))
+
 wrapper_data = configuration_data({
     'BASH': bash.path(),
     'EDITOR_BINARY': editor_path,
@@ -59,12 +62,12 @@ configure_file(input: 'vscode.sh',
                install_dir: get_option('bindir'),
                install_mode: 'rwxr-xr-x')
 
-configure_file(input: 'first_run.txt',
+configure_file(input: first_run_template,
                output: 'first_run.txt',
                configuration: readme_data,
                install_dir: datadir)
 
-configure_file(input: 'sdk_update.txt',
+configure_file(input: sdk_update_template,
                output: 'sdk_update.txt',
                configuration: readme_data,
                install_dir: datadir)
