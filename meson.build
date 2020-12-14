@@ -6,25 +6,28 @@ python = pymod.find_installation('python3')
 
 editor = find_program(get_option('editor_binary'), required: false)
 if editor.found()
-editor_path = editor.path()
+    editor_path = editor.path()
 else
-editor_path = get_option('editor_binary')
+    editor_path = get_option('editor_binary')
+    if editor_path == ''
+        error('Editor binary path is empty')
+    endif
 endif
 message('Using @0@ as editor binary'.format(editor_path))
 
 if get_option('flatpak_id') == ''
-flatpak_id = run_command('sh', '-c', 'echo $FLATPAK_ID').stdout().strip()
+    flatpak_id = run_command('sh', '-c', 'echo $FLATPAK_ID').stdout().strip()
 else
-flatpak_id = get_option('flatpak_id')
+    flatpak_id = get_option('flatpak_id')
 endif
 datadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
 
 if get_option('sdk_version') == ''
-sdk_version_cmd = run_command('sh', '-c', '. /etc/os-release && echo $VERSION_ID')
-sdk_version_arr = sdk_version_cmd.stdout().strip().split('.')
-sdk_version = '.'.join([sdk_version_arr[0], sdk_version_arr[1]])
+    sdk_version_cmd = run_command('sh', '-c', '. /etc/os-release && echo $VERSION_ID')
+    sdk_version_arr = sdk_version_cmd.stdout().strip().split('.')
+    sdk_version = '.'.join([sdk_version_arr[0], sdk_version_arr[1]])
 else
-sdk_version = get_option('sdk_version')
+    sdk_version = get_option('sdk_version')
 endif
 
 editor_args = []
