@@ -1,4 +1,4 @@
-project('vscode-flatpak-wrapper')
+project('ide-flatpak-wrapper')
 
 bash = find_program('bash')
 pymod = import('python')
@@ -48,6 +48,7 @@ wrapper_data = configuration_data({
     'EDITOR_TITLE': get_option('editor_title'),
     'FIRST_RUN_README': join_paths(datadir, first_run_filename),
     'SDK_UPDATE_README': join_paths(datadir, sdk_update_filename),
+    'FLAGFILE_PREFIX': get_option('flagfile_prefix'),
     'SDK_VERSION': sdk_version,
     'PROGRAM_NAME': get_option('program_name'),
     'PYTHON_VERSION': python.language_version()
