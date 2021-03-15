@@ -3,6 +3,7 @@ project('vscode-flatpak-wrapper')
 bash = find_program('bash')
 pymod = import('python')
 python = pymod.find_installation('python3')
+fs = import('fs')
 
 editor = find_program(get_option('editor_binary'), required: false)
 if editor.found()
@@ -37,8 +38,8 @@ endforeach
 
 first_run_template = files(get_option('first_run_template'))
 sdk_update_template = files(get_option('sdk_update_template'))
-first_run_filename = '.'.join(['first_run', get_option('first_run_filename_extension')])
-sdk_update_filename = '.'.join(['sdk_update', get_option('sdk_update_filename_extension')])
+first_run_filename = fs.name(get_option('first_run_template'))
+sdk_update_filename = fs.name(get_option('sdk_update_template'))
 
 wrapper_data = configuration_data({
     'BASH': bash.path(),
