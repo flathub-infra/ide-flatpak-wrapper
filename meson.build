@@ -3,6 +3,7 @@ project('vscode-flatpak-wrapper')
 bash = find_program('bash')
 pymod = import('python')
 python = pymod.find_installation('python3')
+fs = import('fs')
 
 editor = find_program(get_option('editor_binary'), required: false)
 if editor.found()
@@ -37,14 +38,16 @@ endforeach
 
 first_run_template = files(get_option('first_run_template'))
 sdk_update_template = files(get_option('sdk_update_template'))
+first_run_filename = fs.name(get_option('first_run_template'))
+sdk_update_filename = fs.name(get_option('sdk_update_template'))
 
 wrapper_data = configuration_data({
     'BASH': bash.path(),
     'EDITOR_BINARY': editor_path,
     'EDITOR_ARGS': ' '.join(editor_args),
     'EDITOR_TITLE': get_option('editor_title'),
-    'FIRST_RUN_README': join_paths(datadir, 'first_run.txt'),
-    'SDK_UPDATE_README': join_paths(datadir, 'sdk_update.txt'),
+    'FIRST_RUN_README': join_paths(datadir, first_run_filename),
+    'SDK_UPDATE_README': join_paths(datadir, sdk_update_filename),
     'SDK_VERSION': sdk_version,
     'PROGRAM_NAME': get_option('program_name'),
     'PYTHON_VERSION': python.language_version()
@@ -63,11 +66,11 @@ configure_file(input: 'vscode.sh',
                install_mode: 'rwxr-xr-x')
 
 configure_file(input: first_run_template,
-               output: 'first_run.txt',
+               output: first_run_filename,
                configuration: readme_data,
                install_dir: datadir)
 
 configure_file(input: sdk_update_template,
-               output: 'sdk_update.txt',
+               output: sdk_update_filename,
                configuration: readme_data,
                install_dir: datadir)
