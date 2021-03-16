@@ -4,8 +4,8 @@
 set -e
 shopt -s nullglob
 
-FIRST_RUN="${XDG_CONFIG_HOME}/flatpak-vscode-first-run"
-SDK_UPDATE="${XDG_CONFIG_HOME}/flatpak-vscode-sdk-update-@SDK_VERSION@"
+FIRST_RUN="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-first-run"
+SDK_UPDATE="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-sdk-update-@SDK_VERSION@"
 
 function msg() {
   echo "@PROGRAM_NAME@-wrapper: $*" >&2
@@ -15,7 +15,7 @@ function exec_vscode() {
   exec "@EDITOR_BINARY@" @EDITOR_ARGS@ "$@"
 }
 
-if [ -n "${FLATPAK_VSCODE_ENV}" ]; then
+if [ -n "${FLATPAK_IDE_ENV}" ]; then
   msg "Environment is already set up"
   exec_vscode "$@"
 fi
@@ -101,7 +101,7 @@ if [ "${FLATPAK_ISOLATE_PIP}" -ne 0 ]; then
   export PATH="$PATH:$PYTHONUSERBASE/bin"
 fi
 
-export FLATPAK_VSCODE_ENV=1
+export FLATPAK_IDE_ENV=1
 
 if [ ! -f "${FIRST_RUN}" ]; then
   touch "${FIRST_RUN}"
