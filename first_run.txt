@@ -19,8 +19,13 @@ To make the Integrated Terminal automatically use the host system's shell,
 you can add this to the settings:
 
   {
-    "terminal.integrated.shell.linux": "/usr/bin/env",
-    "terminal.integrated.shellArgs.linux": ["--", "flatpak-spawn", "--host", "bash"]
+    "terminal.integrated.profiles.linux": {
+      "flatpak": {
+        "path": "/usr/bin/env",
+        "args":  ["--", "flatpak-spawn", "--host", "bash"]
+      }
+    },
+    "terminal.integrated.defaultProfile.linux": "flatpak"
   }
 
 This flatpak provides a standard development environment (gcc, python, etc).
