@@ -25,7 +25,7 @@ you can add this to the settings:
         "args":  ["--host", "bash"]
       }
     },
-    "terminal.integrated.defaultProfile.linux": "flatpak"
+    "terminal.integrated.defaultProfile.linux": "host-bash"
   }
 
 This flatpak provides a standard development environment (gcc, python, etc).
