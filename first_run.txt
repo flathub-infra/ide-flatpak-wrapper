@@ -20,7 +20,7 @@ you can add this to the settings:
 
   {
     "terminal.integrated.profiles.linux": {
-      "flatpak": {
+      "host-bash": {
         "path": "/usr/bin/env",
         "args":  ["--", "flatpak-spawn", "--host", "bash"]
       }
