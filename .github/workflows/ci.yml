@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: freedesktopsdk/flatpak:20.08-x86_64
+      image: freedesktopsdk/sdk:20.08-x86_64
 
     steps:
       - uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     container:
-      image: freedesktopsdk/flatpak:20.08-x86_64
+      image: freedesktopsdk/sdk:20.08-x86_64
 
     needs: build
 
