@@ -36,16 +36,6 @@ jobs:
           name: ide-wrapper-build
           path: ide-wrapper-build
 
-  check:
-    runs-on: ubuntu-latest
-    container:
-      image: freedesktopsdk/sdk:20.08-x86_64
-
-    needs: build
-
-    steps:
-      - uses: actions/checkout@v2
-
       - name: Install shellcheck
         run: |
           set -e -o pipefail
@@ -56,10 +46,6 @@ jobs:
           )
           wget -O - "$shellcheck_tarball_url" | tar -xJf -
           install -Dm755 shellcheck-*/shellcheck /usr/local/bin/shellcheck
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: ide-wrapper-build
 
       - name: Run shellcheck
         run: |
