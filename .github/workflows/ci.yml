@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: freedesktopsdk/flatpak:20.08-x86_64
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and install
+        env:
+          FLATPAK_ID: com.example.DummyEditor
+        run: |
+          set -e
+          meson \
+            --prefix=$(pwd)/ide-wrapper-build \
+            -Deditor_binary=/bin/echo \
+            -Deditor_args='["--some-option"]' \
+            -Deditor_title='Test dummy editor' \
+            -Dprogram_name=dummy-editor \
+            -Dflagfile_prefix=dummy \
+            build
+          ninja -C build
+          ninja -C install
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ide-wrapper-build
+          path: ide-wrapper-build
+
+  check:
+    runs-on: ubuntu-latest
+    container:
+      image: freedesktopsdk/flatpak:20.08-x86_64
+
+    needs: build
+
+    steps:
+      - name: Install shellcheck
+        run: |
+          set -e -o pipefail
+          shopt -s failglob
+          read -r shellcheck_tarball_url < <(
+            curl -L https://api.github.com/repos/koalaman/shellcheck/releases/latest | \
+            jq -r '.assets | map(select(.name | endswith("linux.x86_64.tar.xz"))) | first | .browser_download_url'
+          )
+          wget -O - "$shellcheck_tarball_url" | tar -xJf -
+          install shellcheck-*/shellcheck /usr/local/bin/shellcheck
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: ide-wrapper-build
+
+      - name: Run shellcheck
+        run: |
+          shellcheck --severity=style ide-wrapper-build/bin/dummy-editor
+
