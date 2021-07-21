@@ -53,7 +53,7 @@ jobs:
             jq -r '.assets | map(select(.name | endswith("linux.x86_64.tar.xz"))) | first | .browser_download_url'
           )
           wget -O - "$shellcheck_tarball_url" | tar -xJf -
-          install shellcheck-*/shellcheck /usr/local/bin/shellcheck
+          install -Dm755 shellcheck-*/shellcheck /usr/local/bin/shellcheck
 
       - uses: actions/download-artifact@v2
         with:
