@@ -26,7 +26,7 @@ To use this repository as a git submodule, you may clone it inside of your flatp
 with the command:
 
 ```
-git submodule add https://github.com/flathub/ide-flatpak-wrapper/
+git submodule add https://github.com/flathub/ide-flatpak-wrapper.git
 ```
 
 Then, you will bring it into your build file using flatpak-builder's "dir" source. Example:
@@ -50,7 +50,7 @@ If you prefer, you may use the git source instead. Exemple:
       # your config opts (more on this later)
     sources:
       - type: git
-        url: ssh://git@github.com:flathub/ide-flatpak-wrapper.git
+        url: https://github.com/flathub/ide-flatpak-wrapper.git
         branch: master
 ```
 
