@@ -76,9 +76,6 @@ Additionally, you may specify the following options:
   - `-Deditor_args` Command line args to append to the editor executable.
   - `-Deditor_title` Human readable title of the editor. This will be interpolated into the "first run template"
       file (more on this file later).
-  - `-Dflatpak_id` ID of your flatpak, this will default to the "app-id" key of your build file and can also be
-      interpolated into the "first run template".
-  - `-Dsdk_version` Manually specify your flatpak's SDK version. By default it will be read from `/etc/os-release`.
   - `-Dfirst_run_template` Name of the file that will be opened on your editor's first run.
   - `-Dsdk_update_template` Name of the file that will be opened when your flatpak updates its SDK. This can be
       used to inform the user that the SDK extensions they were using before must be updated as well.
