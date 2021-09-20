@@ -20,7 +20,7 @@ Usage of this module consists of:
   executable. This must be done on the "command" key of your build file as well as on the
   ".desktop" file of your upstream.
 
-### Sourcing this repository
+### Sourcing this Repository
 
 To use this repository as a git submodule, you may clone it inside of your flatpak's build directory
 with the command:
@@ -56,7 +56,7 @@ If you prefer, you may use the git source instead. Exemple:
 
 ### Specifying Config Options
 
-For this module to work properly, we must specify a minimum of 2 otions - the path to your editor's
+For this module to work properly, we must specify a minimum of 2 options - the path to your editor's
 binary and a name to install the wrapper under:
 
 ```yaml
@@ -75,9 +75,9 @@ Additionally, you may specify the following options:
 
   - `-Deditor_args` Command line args to append to the editor executable.
   - `-Deditor_title` Human readable title of the editor. This will be interpolated into the "first run template"
-      file (more on this file later)
+      file (more on this file later).
   - `-Dflatpak_id` ID of your flatpak, this will default to the "app-id" key of your build file and can also be
-      interpolated into the "first run template"
+      interpolated into the "first run template".
   - `-Dsdk_version` Manually specify your flatpak's SDK version. By default it will be read from `/etc/os-release`.
   - `-Dfirst_run_template` Name of the file that will be opened on your editor's first run.
   - `-Dsdk_update_template` Name of the file that will be opened when your flatpak updates its SDK. This can be
