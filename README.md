@@ -109,7 +109,7 @@ module:
         path: sdk-update.txt
 ```
 
-Those template files have string interpolation for the `editor_title` and `flatpak_id` using the `@` symbol.
+Those template files have string interpolation for the `EDITOR_TITLE` and `FLATPAK_ID` using the `@` symbol.
 For example, using an editor title of "VS Code" and a flatpak ID of "com.visualstudio.code" the template file
 would go from this:
 
