@@ -36,6 +36,10 @@ foreach arg : get_option('editor_args')
     editor_args += '"@0@"'.format(arg)
 endforeach
 
+wrapper_name = '@0@-wrapper'.format(get_option('program_name'))
+wrapper_dir = join_paths(get_option('prefix'), get_option('bindir'))
+wrapper_path = join_paths(wrapper_dir, wrapper_name)
+
 first_run_template = files(get_option('first_run_template'))
 sdk_update_template = files(get_option('sdk_update_template'))
 first_run_filename = fs.name(get_option('first_run_template'))
@@ -43,6 +47,7 @@ sdk_update_filename = fs.name(get_option('sdk_update_template'))
 
 wrapper_data = configuration_data({
     'BASH': bash.path(),
+    'WRAPPER_PATH': wrapper_path,
     'EDITOR_BINARY': editor_path,
     'EDITOR_ARGS': ' '.join(editor_args),
     'EDITOR_TITLE': get_option('editor_title'),
@@ -61,7 +66,13 @@ readme_data = configuration_data({
     'SDK_VERSION': sdk_version
 })
 
-configure_file(input: 'vscode.sh',
+configure_file(input: 'editor-wrapper.sh',
+               output: wrapper_name,
+               configuration: wrapper_data,
+               install_dir: wrapper_dir,
+               install_mode: 'rwxr-xr-x')
+
+configure_file(input: 'editor.sh',
                output: get_option('program_name'),
                configuration: wrapper_data,
                install_dir: get_option('bindir'),
