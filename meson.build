@@ -65,6 +65,17 @@ readme_data = configuration_data({
     'SDK_VERSION': sdk_version
 })
 
+if get_option('zypak').enabled()
+    zypak_helper = find_program('zypak-helper')
+    zypak_bindir = fs.parent(zypak_helper.path())
+    zypak_libdir = join_paths(fs.parent(fs.parent(zypak_helper.path())), 'lib')
+    wrapper_data.set('ZYPAK_BINDIR', zypak_bindir)
+    wrapper_data.set('ZYPAK_LIBDIR', zypak_libdir)
+else
+    wrapper_data.set('ZYPAK_BINDIR', '')
+    wrapper_data.set('ZYPAK_LIBDIR', '')
+endif
+
 configure_file(input: 'editor-wrapper.sh',
                output: wrapper_name,
                configuration: wrapper_data,
