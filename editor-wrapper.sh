@@ -13,7 +13,14 @@ function msg() {
 }
 
 function exec_editor() {
-  exec "@EDITOR_BINARY@" "$@"
+  if [ -n "@ZYPAK_BINDIR@" ]; then
+    export ZYPAK_BIN="@ZYPAK_BINDIR@"
+    export ZYPAK_LIB="@ZYPAK_LIBDIR@"
+    export CHROME_WRAPPER="@WRAPPER_PATH@"
+    exec "@ZYPAK_BINDIR@/zypak-helper" host "@EDITOR_BINARY@" "$@"
+  else
+    exec "@EDITOR_BINARY@" "$@"
+  fi
 }
 
 if [ -n "${FLATPAK_IDE_ENV}" ]; then
