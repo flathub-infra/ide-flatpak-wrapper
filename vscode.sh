@@ -70,6 +70,14 @@ for i in "${SDK[@]}"; do
   fi
 done
 
+# Create /etc/shells and add shells from extensions
+if [ ! -f /etc/shells ]; then
+  printf '/usr/bin/%s\n' sh bash > /etc/shells
+  for ext_etc_shells in /app/tools/*/etc/shells; do
+    cat >> /etc/shells < "$ext_etc_shells"
+  done
+fi
+
 FLATPAK_PREFER_USER_PACKAGES="${FLATPAK_PREFER_USER_PACKAGES:-0}"
 FLATPAK_ISOLATE_PACKAGES="${FLATPAK_ISOLATE_PACKAGES:-1}"
 FLATPAK_ISOLATE_NPM="${FLATPAK_ISOLATE_NPM:-${FLATPAK_ISOLATE_PACKAGES}}"
