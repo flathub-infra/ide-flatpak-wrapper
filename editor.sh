@@ -8,6 +8,7 @@ FIRST_RUN="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-first-run"
 SDK_UPDATE="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-sdk-update-@SDK_VERSION@"
 
 function exec_editor() {
+  @EXPORT_ENVS@
   exec "@WRAPPER_PATH@" @EDITOR_ARGS@ "$@"
 }
 

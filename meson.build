@@ -36,6 +36,18 @@ foreach arg : get_option('editor_args')
     editor_args += '"@0@"'.format(arg)
 endforeach
 
+export_envs = []
+foreach env : get_option('envs')
+    var = env.split('=')
+    export_envs += 'export @0@="@1@"'.format(var[0], var[1])
+endforeach
+
+export_envs_inner = []
+foreach env : get_option('envs_inner')
+    var = env.split('=')
+    export_envs_inner += 'export @0@="@1@"'.format(var[0], var[1])
+endforeach
+
 wrapper_name = '@0@-wrapper'.format(get_option('program_name'))
 wrapper_dir = join_paths(get_option('prefix'), get_option('bindir'))
 wrapper_path = join_paths(wrapper_dir, wrapper_name)
@@ -50,6 +62,8 @@ wrapper_data = configuration_data({
     'WRAPPER_PATH': wrapper_path,
     'EDITOR_BINARY': editor_path,
     'EDITOR_ARGS': ' '.join(editor_args),
+    'EXPORT_ENVS': ' && '.join(export_envs),
+    'EXPORT_ENVS_INNER': ' && '.join(export_envs_inner),
     'EDITOR_TITLE': get_option('editor_title'),
     'FIRST_RUN_README': join_paths(datadir, first_run_filename),
     'SDK_UPDATE_README': join_paths(datadir, sdk_update_filename),
