@@ -6,9 +6,12 @@ shopt -s nullglob
 
 FIRST_RUN="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-first-run"
 SDK_UPDATE="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-sdk-update-@SDK_VERSION@"
+FLATPAK_IDE_LOGLEVEL="${FLATPAK_IDE_LOGLEVEL:-1}"
 
 function msg() {
-  echo "@PROGRAM_NAME@-wrapper: $*" >&2
+  if [ "${FLATPAK_IDE_LOGLEVEL}" -ne 0 ]; then
+    echo "@PROGRAM_NAME@-wrapper: $*" >&2
+  fi
 }
 
 function exec_vscode() {
