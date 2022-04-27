@@ -3,12 +3,14 @@
 This wrapper sets up development environment before launching the editor inside flatpak sandbox.
 
 Current functions:
+
 * Show up a readme on first launch
 * Show up a notice after SDK update
 * Enable installed SDK extensions (from `/usr/lib/sdk`)
   * `FLATPAK_ENABLE_SDK_EXT` must be set to a comma-separated list or `*`
 * Enable installed development tools (from `/app/tools`)
 * Isolate npm/pip/cargo/etc packages from host environment
+* Supress log messages setting `FLATPAK_IDE_LOGLEVEL` to `0` (defaults to `1`)
 
 ## Usage
 
@@ -73,13 +75,13 @@ binary and a name to install the wrapper under:
 
 Additionally, you may specify the following options:
 
-  - `-Deditor_args` Command line args to append to the editor executable.
-  - `-Deditor_title` Human readable title of the editor. This will be interpolated into the "first run template"
+* `-Deditor_args` Command line args to append to the editor executable.
+* `-Deditor_title` Human readable title of the editor. This will be interpolated into the "first run template"
       file (more on this file later).
-  - `-Dfirst_run_template` Name of the file that will be opened on your editor's first run.
-  - `-Dsdk_update_template` Name of the file that will be opened when your flatpak updates its SDK. This can be
+* `-Dfirst_run_template` Name of the file that will be opened on your editor's first run.
+* `-Dsdk_update_template` Name of the file that will be opened when your flatpak updates its SDK. This can be
       used to inform the user that the SDK extensions they were using before must be updated as well.
-  - `-Dflagfile_prefix` An arbitrary string prepended to `-first-run` and `-sdk-update-` files names that indicate
+* `-Dflagfile_prefix` An arbitrary string prepended to `-first-run` and `-sdk-update-` files names that indicate
       that we already did show the corresponding readme.
 
 ### Overwriting the Flatpak's Entry Points
