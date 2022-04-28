@@ -10,7 +10,6 @@ Current functions:
   * `FLATPAK_ENABLE_SDK_EXT` must be set to a comma-separated list or `*`
 * Enable installed development tools (from `/app/tools`)
 * Isolate npm/pip/cargo/etc packages from host environment
-* Supress log messages setting `FLATPAK_IDE_LOGLEVEL` to `0` (defaults to `1`)
 
 ## Usage
 
@@ -21,6 +20,8 @@ Usage of this module consists of:
   1. Overwriting your flatpak's entry points to run the wrapper instead of the actual program's
   executable. This must be done on the "command" key of your build file as well as on the
   ".desktop" file of your upstream.
+
+Some aspects of this module's behaviour may be changed using environment variables, see the full listing in the "Environment Variables" section below.
 
 ### Sourcing this Repository
 
@@ -132,3 +133,29 @@ To this:
 
 Please open issues under: https://github.com/flathub/com.visualstudio.code/issues
 ```
+
+## Environment Variables
+
+You may use the following environment variables to change the behaviour of the ide-flatpak-wrapper:
+
+### FLATPAK_IDE_LOG_LEVEL (= `1`)
+
+Controls verbosity of the module, `0` supresses all module-originated outputs to stdout.
+
+* Type: Number (`0` | `1`)
+
+### FLATPAK_PREFER_USER_PACKAGES (= `0`)
+
+### FLATPAK_ISOLATE_PACKAGES (= `1`)
+
+### FLATPAK_ISOLATE_NPM (= `FLATPAK_ISOLATE_PACKAGES`)
+
+### FLATPAK_PREFER_USER_NPM (= `FLATPAK_PREFER_USER_PACKAGES`)
+
+### FLATPAK_ISOLATE_CARGO (= `FLATPAK_ISOLATE_PACKAGES`)
+
+### FLATPAK_PREFER_USER_CARGO (= `FLATPAK_PREFER_USER_PACKAGES`)
+
+### FLATPAK_ISOLATE_PIP (= `FLATPAK_ISOLATE_PACKAGES`)
+
+### FLATPAK_PREFER_USER_PIP (= `FLATPAK_PREFER_USER_PACKAGES`)
