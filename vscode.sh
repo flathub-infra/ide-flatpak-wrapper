@@ -132,7 +132,7 @@ fi
 
 if [ "${FLATPAK_ISOLATE_GEM}" -ne 0 ]; then
   msg "Setting up Ruby packages"
-  GEM_USER_INSTALL=$(ruby <<<'puts Gem.user_dir')
+  GEM_USER_INSTALL="$(ruby <<<'puts Gem.user_dir')"
   if [ "$FLATPAK_PREFER_USER_GEM" -ne 0 ]; then
     export PATH="$GEM_USER_INSTALL/bin:$PATH"
   else
