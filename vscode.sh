@@ -132,11 +132,11 @@ fi
 
 if [ "${FLATPAK_ISOLATE_GEM}" -ne 0 ]; then
   msg "Setting up Ruby packages"
-  export GEM_HOME="$XDG_DATA_HOME/gem"
+  GEM_USER_INSTALL="$XDG_DATA_HOME/gem/ruby/3.0.0"
   if [ "$FLATPAK_PREFER_USER_GEM" -ne 0 ]; then
-    export PATH="$GEM_HOME/bin:$PATH"
+    export PATH="$GEM_USER_INSTALL/bin:$PATH"
   else
-    export PATH="$PATH:$GEM_HOME/bin"
+    export PATH="$PATH:$GEM_USER_INSTALL/bin"
   fi
 fi
 
