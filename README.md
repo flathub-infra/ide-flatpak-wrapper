@@ -138,7 +138,7 @@ Please open issues under: https://github.com/flathub/com.visualstudio.code/issue
 
 You may use the following environment variables to change the behaviour of the ide-flatpak-wrapper:
 
-* `FLATPAK_IDE_LOG_LEVEL` (= `1`)
+* `FLATPAK_IDE_LOGLEVEL` (= `1`)
 
   Controls verbosity of the module, `0` supresses all module-originated outputs to stdout.
 
