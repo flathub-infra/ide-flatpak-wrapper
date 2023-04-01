@@ -51,7 +51,8 @@ wrapper_data = configuration_data({
     'FLAGFILE_PREFIX': get_option('flagfile_prefix'),
     'SDK_VERSION': sdk_version,
     'PROGRAM_NAME': get_option('program_name'),
-    'PYTHON_VERSION': python.language_version()
+    'PYTHON_VERSION': python.language_version(),
+    'DEFAULT_LOGLEVEL': get_option('default_loglevel'),
 })
 
 readme_data = configuration_data({
