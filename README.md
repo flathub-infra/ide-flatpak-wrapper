@@ -84,6 +84,7 @@ Additionally, you may specify the following options:
       used to inform the user that the SDK extensions they were using before must be updated as well.
 * `-Dflagfile_prefix` An arbitrary string prepended to `-first-run` and `-sdk-update-` files names that indicate
       that we already did show the corresponding readme.
+* `-Ddefault_loglevel` The default loglevel. May be overwritten by user with FLATPAK_IDE_LOGLEVEL environment variable.
 
 ### Overwriting the Flatpak's Entry Points
 
