@@ -36,9 +36,9 @@ function export_path_vars() {
     if [ -d "$abs_dir" ]; then
       msg "Adding $abs_dir to $var_name"
       if [ -z "${!var_name}" ]; then
-        export $var_name="$abs_dir"
+        export "$var_name"="$abs_dir"
       else
-        export $var_name="${!var_name}:$abs_dir"
+        export "$var_name"="${!var_name}:$abs_dir"
       fi
     fi
   done
