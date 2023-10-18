@@ -36,6 +36,11 @@ foreach arg : get_option('editor_args')
     editor_args += '"@0@"'.format(arg)
 endforeach
 
+zypak_args = []
+foreach arg : get_option('zypak_args')
+    zypak_args += '"@0@"'.format(arg)
+endforeach
+
 export_envs = []
 foreach env : get_option('envs')
     var = env.split('=')
@@ -62,6 +67,7 @@ wrapper_data = configuration_data({
     'WRAPPER_PATH': wrapper_path,
     'EDITOR_BINARY': editor_path,
     'EDITOR_ARGS': ' '.join(editor_args),
+    'ZYPAK_ARGS': ' '.join(zypak_args),
     'EXPORT_ENVS': ' && '.join(export_envs),
     'EXPORT_ENVS_INNER': ' && '.join(export_envs_inner),
     'EDITOR_TITLE': get_option('editor_title'),
