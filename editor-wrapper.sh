@@ -18,7 +18,7 @@ function exec_editor() {
     export ZYPAK_BIN="@ZYPAK_BINDIR@"
     export ZYPAK_LIB="@ZYPAK_LIBDIR@"
     export CHROME_WRAPPER="@WRAPPER_PATH@"
-    exec "@ZYPAK_BINDIR@/zypak-helper" host "@EDITOR_BINARY@" "$@"
+    exec "@ZYPAK_BINDIR@/zypak-helper" @ZYPAK_ARGS@ "@EDITOR_BINARY@" "$@"
   else
     exec "@EDITOR_BINARY@" "$@"
   fi
