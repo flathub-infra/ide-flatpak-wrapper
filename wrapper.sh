@@ -1,11 +1,8 @@
-#!@BASH@
 # shellcheck shell=bash
 
 set -e
 shopt -s nullglob
 
-FIRST_RUN="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-first-run"
-SDK_UPDATE="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-sdk-update-@SDK_VERSION@"
 FLATPAK_IDE_LOGLEVEL="${FLATPAK_IDE_LOGLEVEL:-@DEFAULT_LOGLEVEL@}"
 
 function msg() {
@@ -14,13 +11,9 @@ function msg() {
   fi
 }
 
-function exec_vscode() {
-  exec "@EDITOR_BINARY@" @EDITOR_ARGS@ "$@"
-}
-
 if [ -n "${FLATPAK_IDE_ENV}" ]; then
   msg "Environment is already set up"
-  exec_vscode "$@"
+  return
 fi
 
 declare -A PATH_SUBDIRS
@@ -141,14 +134,3 @@ if [ "${FLATPAK_ISOLATE_GEM}" -ne 0 ]; then
 fi
 
 export FLATPAK_IDE_ENV=1
-
-if [ ! -f "${FIRST_RUN}" ]; then
-  touch "${FIRST_RUN}"
-  touch "${SDK_UPDATE}"
-  exec_vscode "$@" "@FIRST_RUN_README@"
-elif [ ! -f "${SDK_UPDATE}" ]; then
-  touch "${SDK_UPDATE}"
-  exec_vscode "$@" "@SDK_UPDATE_README@"
-else
-  exec_vscode "$@"
-fi
