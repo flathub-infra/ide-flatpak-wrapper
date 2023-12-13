@@ -140,6 +140,7 @@ if [ "${FLATPAK_ISOLATE_GEM}" -ne 0 ]; then
   fi
 fi
 
+export ENV="@BASHRC@"
 export FLATPAK_IDE_ENV=1
 
 if [ ! -f "${FIRST_RUN}" ]; then
