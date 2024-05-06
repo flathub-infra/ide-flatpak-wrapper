@@ -9,7 +9,9 @@ SDK_UPDATE="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-sdk-update-@SDK_VERSION@"
 
 function display_server_args (){
   # See https://github.com/flathub/im.riot.Riot/blob/3fdd41c84f40fa1e8e186bade5d832d79045600c/element.sh
-  if [ "wayland" == "${XDG_SESSION_TYPE}" ] && [ -e "${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}" ]
+  # See also https://gaultier.github.io/blog/wayland_from_scratch.html 
+  # and https://github.com/flathub/com.vscodium.codium/issues/321
+  if [[ ${WAYLAND_DISPLAY} == "/run/flatpak/wayland-"* ]] || [[ -e "${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}" ]] && [[ "wayland" == "${XDG_SESSION_TYPE}" ]]
   then
       DISPLAY_SERVER_ARGS="--ozone-platform-hint=auto --enable-wayland-ime --enable-features=WaylandWindowDecorations"
       if  [ -c /dev/nvidia0 ]
@@ -24,8 +26,8 @@ function display_server_args (){
 
 function exec_editor() {
   @EXPORT_ENVS@
-  # shellcheck disable=SC2046
-  exec "@WRAPPER_PATH@" @EDITOR_ARGS@ $(display_server_args) "$@"
+  # shellcheck disable=SC2046,SC2086
+  exec "@WRAPPER_PATH@" @EDITOR_ARGS@ $(display_server_args) ${EDITOR_RUNTIME_ARGS} "$@"
 }
 
 if [ ! -f "${FIRST_RUN}" ]; then
