@@ -11,7 +11,7 @@ function display_server_args (){
   # See https://github.com/flathub/im.riot.Riot/blob/3fdd41c84f40fa1e8e186bade5d832d79045600c/element.sh
   # See also https://gaultier.github.io/blog/wayland_from_scratch.html 
   # and https://github.com/flathub/com.vscodium.codium/issues/321
-  if [ "wayland" == "${XDG_DISPLAY_TYPE}" ] && [ -n "${WAYLAND_DISPLAY}" ]
+  if [ "wayland" == "${XDG_SESSION_TYPE}" ] && [ -n "${WAYLAND_DISPLAY}" ]
   then
     if [[ "${WAYLAND_DISPLAY}" =~ ^/ ]]
     then
