@@ -47,5 +47,5 @@ jobs:
 
       - name: Run shellcheck
         run: |
-          shellcheck --severity=style ide-wrapper-build/bin/dummy-editor
+          shellcheck --severity=style ide-wrapper-build/bin/dummy-editor{,-wrapper}
 

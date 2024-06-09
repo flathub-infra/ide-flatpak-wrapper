@@ -14,6 +14,7 @@ function msg() {
 
 function exec_editor() {
   @EXPORT_ENVS_INNER@
+  # shellcheck disable=SC2157
   if [ -n "@ZYPAK_BINDIR@" ]; then
     export ZYPAK_BIN="@ZYPAK_BINDIR@"
     export ZYPAK_LIB="@ZYPAK_LIBDIR@"
