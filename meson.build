@@ -31,6 +31,17 @@ else
     sdk_version = get_option('sdk_version')
 endif
 
+if get_option('electron').enabled()
+    electron_enabled = true
+elif get_option('electron').auto()
+    electron_enabled = get_option('zypak').enabled()
+else
+    if get_option('zypak').enabled()
+        error('`electron` feature is required if `zypak` is enabled')
+    endif
+    electron_enabled = false
+endif
+
 editor_args = []
 foreach arg : get_option('editor_args')
     editor_args += '"@0@"'.format(arg)
@@ -67,6 +78,7 @@ wrapper_data = configuration_data({
     'WRAPPER_PATH': wrapper_path,
     'EDITOR_BINARY': editor_path,
     'EDITOR_ARGS': ' '.join(editor_args),
+    'ELECTRON_ENABLED': electron_enabled.to_int(),
     'ZYPAK_ARGS': ' '.join(zypak_args),
     'EXPORT_ENVS': ' && '.join(export_envs),
     'EXPORT_ENVS_INNER': ' && '.join(export_envs_inner),

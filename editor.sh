@@ -21,6 +21,11 @@ function update_display_server_args () {
     fi
   fi
 
+  # shellcheck disable=SC2050
+  if [ "@ELECTRON_ENABLED@" -eq 0 ]; then
+    return 0
+  fi
+
   if [ -e "$wayland_socket" ]; then
     DISPLAY_SERVER_ARGS=(
       "--ozone-platform=wayland"
