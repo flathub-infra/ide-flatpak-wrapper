@@ -74,7 +74,7 @@ for i in "${SDK[@]}"; do
 done
 
 # enable path of linux brew
-if [ "$FLATPAK_ENABLE_BREW_SDK" -ne 0 ]; then 
+if [[ -n "${FLATPAK_ENABLE_BREW_SDK+x}" && "$FLATPAK_ENABLE_BREW_SDK" -ne 0 ]]; then
   msg "setting environment variable for linuxbrew"
   if [ -f /home/linuxbrew/.linuxbrew/bin/brew ] ; then 
     eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
