@@ -31,6 +31,7 @@ function update_display_server_args () {
       "--ozone-platform=wayland"
       "--enable-wayland-ime"
       "--enable-features=WaylandWindowDecorations"
+      "--wayland-text-input-version=3"
     )
     if [ -c /dev/nvidia0 ]; then
       DISPLAY_SERVER_ARGS+=("--disable-gpu-sandbox")
