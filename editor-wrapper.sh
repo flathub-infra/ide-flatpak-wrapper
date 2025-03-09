@@ -4,8 +4,6 @@
 set -e
 shopt -s nullglob
 
-FIRST_RUN="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-first-run"
-SDK_UPDATE="${XDG_CONFIG_HOME}/@FLAGFILE_PREFIX@-sdk-update-@SDK_VERSION@"
 FLATPAK_IDE_LOGLEVEL="${FLATPAK_IDE_LOGLEVEL:-@DEFAULT_LOGLEVEL@}"
 
 function msg() {
@@ -14,13 +12,22 @@ function msg() {
   fi
 }
 
-function exec_vscode() {
-  exec "@EDITOR_BINARY@" @EDITOR_ARGS@ "$@"
+function exec_editor() {
+  @EXPORT_ENVS_INNER@
+  # shellcheck disable=SC2157
+  if [ -n "@ZYPAK_BINDIR@" ]; then
+    export ZYPAK_BIN="@ZYPAK_BINDIR@"
+    export ZYPAK_LIB="@ZYPAK_LIBDIR@"
+    export CHROME_WRAPPER="@WRAPPER_PATH@"
+    exec "@ZYPAK_BINDIR@/zypak-helper" @ZYPAK_ARGS@ "@EDITOR_BINARY@" "$@"
+  else
+    exec "@EDITOR_BINARY@" "$@"
+  fi
 }
 
 if [ -n "${FLATPAK_IDE_ENV}" ]; then
   msg "Environment is already set up"
-  exec_vscode "$@"
+  exec_editor "$@"
 fi
 
 declare -A PATH_SUBDIRS
@@ -142,13 +149,4 @@ fi
 
 export FLATPAK_IDE_ENV=1
 
-if [ ! -f "${FIRST_RUN}" ]; then
-  touch "${FIRST_RUN}"
-  touch "${SDK_UPDATE}"
-  exec_vscode "$@" "@FIRST_RUN_README@"
-elif [ ! -f "${SDK_UPDATE}" ]; then
-  touch "${SDK_UPDATE}"
-  exec_vscode "$@" "@SDK_UPDATE_README@"
-else
-  exec_vscode "$@"
-fi
+exec_editor "$@"

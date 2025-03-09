@@ -160,3 +160,10 @@ You may use the following environment variables to change the behaviour of the i
 * `FLATPAK_ISOLATE_PIP` (= `FLATPAK_ISOLATE_PACKAGES`)
 
 * `FLATPAK_PREFER_USER_PIP` (= `FLATPAK_PREFER_USER_PACKAGES`)
+
+* `EDITOR_RUNTIME_ARGS`
+
+  Add custom arguments to the editor. 
+  
+  Example `flatpak override --user --env=EDITOR_RUNTIME_ARGS="CUSTOM_ARGS" ...`
+
