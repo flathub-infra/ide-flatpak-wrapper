@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     container:
       image: freedesktopsdk/sdk:24.08-x86_64
 
