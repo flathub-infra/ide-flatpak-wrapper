@@ -11,7 +11,7 @@ jobs:
       image: freedesktopsdk/sdk:20.08-x86_64
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Build and install
         env:
@@ -29,7 +29,7 @@ jobs:
           ninja -C build
           ninja -C build install
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: ide-wrapper-build
           path: ide-wrapper-build
