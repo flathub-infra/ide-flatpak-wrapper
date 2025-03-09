@@ -43,11 +43,11 @@ jobs:
         run: |
           set -e -o pipefail
           shopt -s failglob
-          read -r shellcheck_tarball_url < <(
-            curl -L https://api.github.com/repos/koalaman/shellcheck/releases/latest | \
-            jq -r '.assets | map(select(.name | endswith("linux.x86_64.tar.xz"))) | first | .browser_download_url'
-          )
-          wget -O - "$shellcheck_tarball_url" | tar -xJf -
+          shellcheck_tarball="shellcheck.tar.xz"
+          shellcheck_url=$(curl -sL https://api.github.com/repos/koalaman/shellcheck/releases/latest | \
+            jq -r '.assets | map(select(.name | endswith("linux.x86_64.tar.xz"))) | first | .browser_download_url')
+          curl -sL -o "$shellcheck_tarball" "$shellcheck_url"
+          tar -xJf "$shellcheck_tarball"
           install -Dm755 shellcheck-*/shellcheck /usr/local/bin/shellcheck
 
       - name: Run shellcheck
