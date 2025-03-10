@@ -25,6 +25,8 @@ jobs:
           set -e
           meson \
             --prefix=$(pwd)/ide-wrapper-build \
+            -Dlibdir=lib \
+            -Dbindir=bin \
             -Deditor_binary=/bin/echo \
             -Deditor_args='["--some-option"]' \
             -Deditor_title='Test dummy editor' \
@@ -52,5 +54,5 @@ jobs:
 
       - name: Run shellcheck
         run: |
-          shellcheck --severity=style ide-wrapper-build/bin/dummy-editor
+          shellcheck --severity=style ide-wrapper-build/bin/dummy-editor ide-wrapper-build/lib/ide-flatpak-wrapper/wrapper.sh ide-wrapper-build/bin/shell-wrapper
 

@@ -22,6 +22,7 @@ else
     flatpak_id = get_option('flatpak_id')
 endif
 datadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
+libdir = join_paths(get_option('prefix'), get_option('libdir'), meson.project_name())
 
 if get_option('sdk_version') == ''
     sdk_version_cmd = run_command('sh', '-c', '. /etc/os-release && echo $VERSION_ID', check: true)
@@ -53,6 +54,7 @@ wrapper_data = configuration_data({
     'PROGRAM_NAME': get_option('program_name'),
     'PYTHON_VERSION': python.language_version(),
     'DEFAULT_LOGLEVEL': get_option('default_loglevel'),
+    'WRAPPER_SCRIPT': join_paths(libdir, 'wrapper.sh'),
 })
 
 readme_data = configuration_data({
@@ -61,8 +63,19 @@ readme_data = configuration_data({
     'SDK_VERSION': sdk_version
 })
 
-configure_file(input: 'vscode.sh',
+configure_file(input: 'wrapper.sh',
+               output: 'wrapper.sh',
+               configuration: wrapper_data,
+               install_dir: libdir)
+
+configure_file(input: 'editor.sh',
                output: get_option('program_name'),
+               configuration: wrapper_data,
+               install_dir: get_option('bindir'),
+               install_mode: 'rwxr-xr-x')
+
+configure_file(input: 'shell_wrapper.sh',
+               output: get_option('shell_wrapper_name'),
                configuration: wrapper_data,
                install_dir: get_option('bindir'),
                install_mode: 'rwxr-xr-x')

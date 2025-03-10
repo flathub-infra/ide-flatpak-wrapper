@@ -76,6 +76,7 @@ binary and a name to install the wrapper under:
 
 Additionally, you may specify the following options:
 
+* `-Dshell_wrapper_name` Name of an executable that launches bash with the environment set up (defaults to `shell-wrapper`).
 * `-Deditor_args` Command line args to append to the editor executable.
 * `-Deditor_title` Human readable title of the editor. This will be interpolated into the "first run template"
       file (more on this file later).
