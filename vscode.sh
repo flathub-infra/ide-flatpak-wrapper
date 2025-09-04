@@ -131,12 +131,16 @@ if [ "${FLATPAK_ISOLATE_PIP}" -ne 0 ]; then
 fi
 
 if [ "${FLATPAK_ISOLATE_GEM}" -ne 0 ]; then
-  msg "Setting up Ruby packages"
-  GEM_USER_INSTALL="$(ruby <<<'puts Gem.user_dir')"
-  if [ "$FLATPAK_PREFER_USER_GEM" -ne 0 ]; then
-    export PATH="$GEM_USER_INSTALL/bin:$PATH"
+  if ! command -v ruby >/dev/null 2>&1; then
+    msg "'ruby' is not available"
   else
-    export PATH="$PATH:$GEM_USER_INSTALL/bin"
+    msg "Setting up Ruby packages"
+    GEM_USER_INSTALL="$(ruby <<<'puts Gem.user_dir')"
+    if [ "$FLATPAK_PREFER_USER_GEM" -ne 0 ]; then
+      export PATH="$GEM_USER_INSTALL/bin:$PATH"
+    else
+      export PATH="$PATH:$GEM_USER_INSTALL/bin"
+    fi
   fi
 fi
 
