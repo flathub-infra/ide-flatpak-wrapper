@@ -2,16 +2,21 @@ name: CI
 
 on:
   push:
+    branches: master
   pull_request:
+    branches: master
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     container:
-      image: freedesktopsdk/sdk:20.08-x86_64
+      image: freedesktopsdk/sdk:24.08-x86_64
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Build and install
         env:
@@ -29,7 +34,7 @@ jobs:
           ninja -C build
           ninja -C build install
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: ide-wrapper-build
           path: ide-wrapper-build
@@ -38,11 +43,11 @@ jobs:
         run: |
           set -e -o pipefail
           shopt -s failglob
-          read -r shellcheck_tarball_url < <(
-            curl -L https://api.github.com/repos/koalaman/shellcheck/releases/latest | \
-            jq -r '.assets | map(select(.name | endswith("linux.x86_64.tar.xz"))) | first | .browser_download_url'
-          )
-          wget -O - "$shellcheck_tarball_url" | tar -xJf -
+          shellcheck_tarball="shellcheck.tar.xz"
+          shellcheck_url=$(curl -sL https://api.github.com/repos/koalaman/shellcheck/releases/latest | \
+            jq -r '.assets | map(select(.name | endswith("linux.x86_64.tar.xz"))) | first | .browser_download_url')
+          curl -sL -o "$shellcheck_tarball" "$shellcheck_url"
+          tar -xJf "$shellcheck_tarball"
           install -Dm755 shellcheck-*/shellcheck /usr/local/bin/shellcheck
 
       - name: Run shellcheck
