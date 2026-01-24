@@ -15,7 +15,7 @@ Current functions:
 
 Usage of this module consists of:
 
-  1. Sourcing this repository as a git submodule or using flatpak-builder's built-in git source.
+  1. Sourcing this repository as a git source.
   1. Creating a module in your flatpak's build file that specifies the options you want to use.
   1. Overwriting your flatpak's entry points to run the wrapper instead of the actual program's
   executable. This must be done on the "command" key of your build file as well as on the
@@ -25,26 +25,7 @@ Some aspects of this module's behaviour may be changed using environment variabl
 
 ### Sourcing this Repository
 
-To use this repository as a git submodule, you may clone it inside of your flatpak's build directory
-with the command:
-
-```
-git submodule add https://github.com/flathub/ide-flatpak-wrapper.git
-```
-
-Then, you will bring it into your build file using flatpak-builder's "dir" source. Example:
-
-```yaml
-  - name: ide-flatpak-wrapper
-    buildsystem: meson
-    config-opts:
-      # your config opts (more on this later)
-    sources:
-      - type: dir
-        path: ide-flatpak-wrapper
-```
-
-If you prefer, you may use the git source instead. Exemple:
+To use this repository use the git source. Example:
 
 ```yaml
   - name: ide-flatpak-wrapper
@@ -54,8 +35,10 @@ If you prefer, you may use the git source instead. Exemple:
     sources:
       - type: git
         url: https://github.com/flathub/ide-flatpak-wrapper.git
-        branch: master
+        commit: <insert_the_commit>
 ```
+
+Make sure you add the proper commit. Use of `branch` isn't allowed on flathub.
 
 ### Specifying Config Options
 
