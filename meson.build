@@ -7,7 +7,7 @@ fs = import('fs')
 
 editor = find_program(get_option('editor_binary'), required: false)
 if editor.found()
-    editor_path = editor.path()
+    editor_path = editor.full_path()
 else
     editor_path = get_option('editor_binary')
     if editor_path == ''
@@ -74,7 +74,7 @@ first_run_filename = fs.name(get_option('first_run_template'))
 sdk_update_filename = fs.name(get_option('sdk_update_template'))
 
 wrapper_data = configuration_data({
-    'BASH': bash.path(),
+    'BASH': bash.full_path(),
     'WRAPPER_PATH': wrapper_path,
     'EDITOR_BINARY': editor_path,
     'EDITOR_ARGS': ' '.join(editor_args),
@@ -100,8 +100,8 @@ readme_data = configuration_data({
 
 if get_option('zypak').enabled()
     zypak_helper = find_program('zypak-helper')
-    zypak_bindir = fs.parent(zypak_helper.path())
-    zypak_libdir = join_paths(fs.parent(fs.parent(zypak_helper.path())), 'lib')
+    zypak_bindir = fs.parent(zypak_helper.full_path())
+    zypak_libdir = join_paths(fs.parent(fs.parent(zypak_helper.full_path())), 'lib')
     wrapper_data.set('ZYPAK_BINDIR', zypak_bindir)
     wrapper_data.set('ZYPAK_LIBDIR', zypak_libdir)
 else
