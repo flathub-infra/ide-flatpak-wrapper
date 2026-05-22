@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      actions: write
     container:
-      image: freedesktopsdk/sdk:24.08-x86_64
+      image: freedesktopsdk/sdk:25.08-x86_64
 
     steps:
-      - uses: actions/checkout@v4
+      # 6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
 
       - name: Build and install
         env:
@@ -33,11 +35,6 @@ jobs:
             build
           ninja -C build
           ninja -C build install
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ide-wrapper-build
-          path: ide-wrapper-build
 
       - name: Install shellcheck
         run: |
