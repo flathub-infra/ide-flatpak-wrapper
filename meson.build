@@ -38,6 +38,7 @@ endforeach
 
 first_run_template = files(get_option('first_run_template'))
 sdk_update_template = files(get_option('sdk_update_template'))
+bashrc_filename = fs.name(get_option('bashrc'))
 first_run_filename = fs.name(get_option('first_run_template'))
 sdk_update_filename = fs.name(get_option('sdk_update_template'))
 
@@ -46,6 +47,7 @@ wrapper_data = configuration_data({
     'EDITOR_BINARY': editor_path,
     'EDITOR_ARGS': ' '.join(editor_args),
     'EDITOR_TITLE': get_option('editor_title'),
+    'BASHRC': join_paths(datadir, bashrc_filename),
     'FIRST_RUN_README': join_paths(datadir, first_run_filename),
     'SDK_UPDATE_README': join_paths(datadir, sdk_update_filename),
     'FLAGFILE_PREFIX': get_option('flagfile_prefix'),
@@ -66,6 +68,11 @@ configure_file(input: 'vscode.sh',
                configuration: wrapper_data,
                install_dir: get_option('bindir'),
                install_mode: 'rwxr-xr-x')
+
+configure_file(input: 'bashrc',
+               output: bashrc_filename,
+               copy: true,
+               install_dir: datadir)
 
 configure_file(input: first_run_template,
                output: first_run_filename,
