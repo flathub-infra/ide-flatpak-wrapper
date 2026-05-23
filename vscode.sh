@@ -73,6 +73,17 @@ for i in "${SDK[@]}"; do
   fi
 done
 
+# enable path of linux brew
+if [[ -n "${FLATPAK_ENABLE_BREW_SDK+x}" && "$FLATPAK_ENABLE_BREW_SDK" -ne 0 ]]; then
+  msg "setting environment variable for linuxbrew"
+  if [ -f /home/linuxbrew/.linuxbrew/bin/brew ] ; then 
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  else 
+    msg "Brew binary not found at /home/linuxbrew/.linuxbrew/bin/brew"
+    msg "Did you enable file access to /home/linuxbrew/.linuxbrew/?"
+  fi
+fi 
+
 # Create /etc/shells and add shells from extensions
 if [ ! -f /etc/shells ]; then
   printf '/usr/bin/%s\n' sh bash > /etc/shells
